@@ -12,6 +12,12 @@
         {{session('error')}}
     </div>
 @endif
+
+<!-- Toggle button to show/hide form -->
+<a href="{{ route('addOrderForm') }}" class="btn btn-primary">Thêm đơn hàng</a>
+
+<!-- Form to add new order -->
+
 <div class="container_table">
     <table class="table_form">
         <tr>
@@ -53,5 +59,6 @@
     </table>
     <div class="clearfix"></div>
 </div>
+
 
 @endsection

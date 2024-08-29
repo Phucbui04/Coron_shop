@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\MyAccountController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\UserController;
@@ -37,6 +38,7 @@ Route::post('/allcheckout',[CheckoutController::class, 'allCheckout'])->name('al
 Route::get('/confirmOrder/{token}',[CheckoutController::class, 'confirmOrder'])->name('confirm.order');
 Route::get('/loginForm',[LoginController::class, 'loginForm'])->name('loginForm');
 Route::post('/login',[LoginController::class, 'login'])->name('login');
+Route::post('/comment/{product_id}',[CommentController::class, 'comment'])->name('comment');
 Route::post('/register', [LoginController::class, 'register'])->name('register');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::post('/myaccount', [UserController::class, 'updateUser'])->name('updateUser');
@@ -67,6 +69,8 @@ Route::post('/categories/edit/{id}', [CategoriesController::class, 'editCategory
 // Order
 Route::get('/order',[OrderController::class, 'order'])->name('order');
 Route::get('/order/detail/{id}',[OrderController::class, 'orderDetail'])->name('orderDetail');
+Route::get('/add/order',[OrderController::class, 'addOrderForm'])->name('addOrderForm');
+Route::post('/add/order',[OrderController::class, 'addOrder'])->name('addOrder');
 Route::get('/order/del/{id}',[OrderController::class, 'orderDelete'])->name('order.del');
 Route::post('/updateStatus/{id}',[OrderController::class, 'updateStatus'])->name('updateStatus');
 // User

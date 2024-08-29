@@ -6,11 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Comment;
+
 class ProductController extends Controller
 {
     public function products(Request $request){
         $allCategories = Category::allCategories(5)->get();
-
         if($request->category_id){
             $allProducts = Product::where('category_id', $request->category_id)->orderBy('id', 'DESC')->paginate(9);
         }else{
@@ -30,7 +31,7 @@ class ProductController extends Controller
     public function detail($id) {
         // Lấy chi tiết sản phẩm
         $product_one = Product::find($id);
-    
+        $comments = Comment::where('product_id', $id)->orderBy('id','DESC')->get();
         // Nếu sản phẩm không tồn tại, trả về trang 404 hoặc thông báo lỗi tùy thuộc vào yêu cầu
         if (!$product_one) {
             abort(404); // Hoặc trả về thông báo lỗi khác tùy theo yêu cầu
@@ -43,7 +44,7 @@ class ProductController extends Controller
                         ->get();
         
         // Trả về view với dữ liệu sản phẩm và sản phẩm liên quan
-        return view('productdetail', ['product_one' => $product_one, 'splq' => $splq]);
+        return view('productdetail', ['product_one' => $product_one, 'splq' => $splq, 'comments'=> $comments]);
     }
     
     

@@ -162,7 +162,9 @@
                         <li>
                             <a class="active" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="false">Thông tin</a>
                         </li>
-
+                        <li>
+                            <a data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false">Đánh giá</a>
+                         </li>
                     </ul>
                 </div>
                 <div class="tab-content">
@@ -172,7 +174,7 @@
                         </div>
                     </div>
 
-                    <!-- <div class="tab-pane fade" id="sheet" role="tabpanel">
+                    <div class="tab-pane fade" id="sheet" role="tabpanel">
                                                 <div class="product_d_table">
                                                    <form action="#">
                                                         <table>
@@ -198,49 +200,59 @@
                                                 </div>    
                                             </div>
                                             <div class="tab-pane fade" id="reviews" role="tabpanel">
-                                                <div class="product_info_content">
+                                                {{-- <div class="product_info_content">
                                                     <p>Fashion has been creating well-designed collections since 2010. The brand offers feminine designs delivering stylish separates and statement dresses which have since evolved into a full ready-to-wear collection in which every item is a vital part of a woman's wardrobe. The result? Cool, easy, chic looks with youthful elegance and unmistakable signature style. All the beautiful pieces are made in Italy and manufactured with the greatest attention. Now Fashion extends to a range of accessories including shoes, hats, belts and more!</p>
-                                                </div>
-                                                <div class="product_info_inner">
-                                                    <div class="product_ratting mb-10">
-                                                        <ul>
-                                                            <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                            <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                            <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                            <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                            <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                                        </ul>
-                                                        <strong>Posthemes</strong> 
-                                                        <p>09/07/2018</p>
-                                                    </div>
-                                                    <div class="product_demo">
-                                                        <strong>demo</strong>
-                                                        <p>That's OK!</p>
-                                                    </div>
-                                                </div> 
-                                                <div class="product_review_form">
-                                                    <form action="#">
-                                                        <h2>Add a review </h2>
-                                                        <p>Your email address will not be published. Required fields are marked </p>
-                                                        <div class="row">
-                                                            <div class="col-12">
-                                                                <label for="review_comment">Your review </label>
-                                                                <textarea name="comment" id="review_comment"></textarea>
-                                                            </div> 
-                                                            <div class="col-lg-6 col-md-6">
-                                                                <label for="author">Name</label>
-                                                                <input id="author" type="text">
+                                                </div> --}}
+<div class="product-comments">
+    <!-- Loop through each comment -->
+    @foreach($comments as $comm)
+        <div class="comment-item p-3 border rounded mb-4">
+            <!-- User Info -->
+            <div class="d-flex align-items-center mb-2">
+                <strong class="me-auto">{{ $comm->user->username }}</strong>
+                <!-- Rating Stars (if applicable) -->
+                <div class="product-rating ms-2">
+                    <i class="fa fa-star text-warning"></i>
+                    <i class="fa fa-star text-warning"></i>
+                    <i class="fa fa-star text-warning"></i>
+                    <i class="fa fa-star text-warning"></i>
+                    <i class="fa fa-star text-muted"></i>
+                </div>
+            </div>
+            <!-- Comment Text -->
+            <p class="mb-1">{{ $comm->comment }}</p>
+            <!-- Comment Date -->
+            <div class="text-muted small">{{ $comm->created_at->format('d/m/Y H:i') }}</div>
+            <!-- Product Image (if applicable) -->
+            @if($comm->image)
+                <div class="mt-3">
+                    <img src="{{ $comm->image }}" alt="product image" class="img-thumbnail" style="max-width: 100px;">
+                </div>
+            @endif
+        </div>              
+                                                    @endforeach
+                                            </div> 
+                            @if(auth()->check())
+               
+                                <div class="product_review_form">
+                                    <form action="{{ route('comment',$product_one->id) }}" method="POST">
+                                    @csrf
+                                    <h2>Add a review </h2>
+                                    <p>Your email address will not be published. Required fields are marked </p>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <label for="review_comment">Your review </label>
+                                            <textarea name="comment" id="review_comment"></textarea>
+                                        </div> 
+                                    </div>
+                                    <button type="submit">Submit</button>
+                                    </form>   
+                                    </div>     
+                                    @else
+                                <strong>Đăng nhập để bình luận -><a class="text-danger" href="{{ route('loginForm') }}">Đăng nhập</a></strong>
+                                @endif
 
-                                                            </div> 
-                                                            <div class="col-lg-6 col-md-6">
-                                                                <label for="email">Email </label>
-                                                                <input id="email" type="text">
-                                                            </div>  
-                                                        </div>
-                                                        <button type="submit">Submit</button>
-                                                     </form>   
-                                                </div>     
-                                            </div> -->
+                    </div> 
                 </div>
             </div>
         </div>
